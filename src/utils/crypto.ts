@@ -1,5 +1,8 @@
+import { config } from 'dotenv'
 import { createHash } from 'node:crypto'
 import { PASSWORD_SECRET_KEY } from '~/configs/envKey'
+
+config()
 
 export function sha256(content: string) {
   return createHash('sha256').update(content).digest('hex')

@@ -5,7 +5,7 @@ import { warpRequestHandler } from '~/utils/handles'
 
 const userRouter = Router()
 
-userRouter.post('/login', loginValidator, loginController)
+userRouter.post('/login', loginValidator, warpRequestHandler(loginController))
 userRouter.post('/register', registerValidator, warpRequestHandler(registerController))
 
 export default userRouter

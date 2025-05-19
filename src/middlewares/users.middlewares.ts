@@ -1,18 +1,46 @@
-import { Request, Response, NextFunction } from 'express'
 import { checkSchema } from 'express-validator'
 import { USER_MESSAGES } from '~/constants/message'
-import { ErrorWithStatus } from '~/models/Errors'
+import databaseService from '~/services/database.services'
 import usersService from '~/services/users.services'
+import { hashPassword } from '~/utils/crypto'
 import { validation } from '~/utils/validation'
 
-export const loginValidator = (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body
-  if (!email || !password) {
-    res.status(400).json({ message: 'Email and password are required.' })
-    return
-  }
-  next()
-}
+export const loginValidator = validation(
+  checkSchema({
+    email: {
+      in: ['body'],
+      isEmail: {
+        errorMessage: USER_MESSAGES.EMAIL_IS_INVALID
+      },
+      trim: true,
+      escape: true,
+      custom: {
+        options: async (value, { req }) => {
+          const user = await databaseService.users.findOne({ email: value, password: hashPassword(req.body.password) })
+          if (user === null) {
+            throw new Error(USER_MESSAGES.EMAIL_OR_PASSWORD_IS_INCORRECT)
+          }
+
+          req.user = user
+          return true
+        }
+      }
+    },
+    password: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: USER_MESSAGES.PASSWORD_IS_REQUIRED
+      },
+      isLength: {
+        options: { min: 6, max: 50 },
+        errorMessage: USER_MESSAGES.PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50
+      },
+      trim: true,
+      escape: true,
+      isString: { errorMessage: USER_MESSAGES.PASSWORD_IS_BE_A_STRING }
+    }
+  })
+)
 
 export const registerValidator = validation(
   checkSchema({

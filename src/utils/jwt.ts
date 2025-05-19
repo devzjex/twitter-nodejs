@@ -1,5 +1,8 @@
+import { config } from 'dotenv'
 import jwt, { SignOptions } from 'jsonwebtoken'
 import { JWT_SECRET_KEY } from '~/configs/envKey'
+
+config()
 
 export const signToken = ({
   payload,
