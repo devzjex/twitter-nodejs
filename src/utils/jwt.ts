@@ -23,3 +23,21 @@ export const signToken = ({
     })
   })
 }
+
+export const verifyToken = ({
+  token,
+  secretOrPublicKey = JWT_SECRET_KEY as string
+}: {
+  token: string
+  secretOrPublicKey?: string
+}) => {
+  return new Promise<jwt.JwtPayload>((resolve, reject) => {
+    jwt.verify(token, secretOrPublicKey, (error, decoded) => {
+      if (error || !decoded) {
+        throw reject(error)
+      } else {
+        resolve(decoded as jwt.JwtPayload)
+      }
+    })
+  })
+}
