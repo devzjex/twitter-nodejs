@@ -26,6 +26,6 @@ export const validation = (validations: RunnableValidationChains<ValidationChain
       entityError.errors[key] = errorsObject[key]
     }
 
-    next(entityError)
+    return next(entityError)
   }
 }

@@ -6,6 +6,7 @@ import { ErrorWithStatus } from '~/models/Errors'
 export const defaultErrorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof ErrorWithStatus) {
     res.status(error.status).json(omit(error, ['status']))
+    return
   }
 
   Object.getOwnPropertyNames(error).forEach((key) => {
@@ -15,4 +16,5 @@ export const defaultErrorHandler = (error: any, req: Request, res: Response, nex
   })
 
   res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message, errorInfo: omit(error, ['stack']) })
+  return
 }
