@@ -7,23 +7,34 @@ import User from '~/models/schemas/User.schema'
 import { USER_MESSAGES } from '~/constants/message'
 
 export const loginController = async (req: Request, res: Response) => {
-  const user = req.user as User
-  const user_id = user._id as ObjectId
-  const result = await usersService.login(user_id.toString())
-  res.json({ message: USER_MESSAGES.LOGIN_SUCCESS, result })
+    const user = req.user as User
+    const user_id = user._id as ObjectId
+    const result = await usersService.login(user_id.toString())
+    res.json({ message: USER_MESSAGES.LOGIN_SUCCESS, result })
 }
 
 export const registerController = async (
-  req: Request<ParamsDictionary, any, RegisterRequestBody>,
-  res: Response,
-  next: NextFunction
+    req: Request<ParamsDictionary, any, RegisterRequestBody>,
+    res: Response,
+    next: NextFunction
 ) => {
-  const result = await usersService.register(req.body)
-  res.json({ message: USER_MESSAGES.REGISTER_SUCCESS, result })
+    const result = await usersService.register(req.body)
+    res.json({ message: USER_MESSAGES.REGISTER_SUCCESS, result })
 }
 
 export const logoutController = async (req: Request<ParamsDictionary, any, LogoutRequestBody>, res: Response) => {
-  const { refresh_token } = req.body
-  const result = await usersService.logout(refresh_token)
-  res.json(result)
+    const { refresh_token } = req.body
+    const result = await usersService.logout(refresh_token)
+    res.json(result)
+}
+
+export const refreshTokenController = async (req: Request, res: Response) => {
+    const { decoded_refresh_token } = req
+    const user_id = decoded_refresh_token?.user_id
+    if (!user_id) {
+        res.status(401).json({ message: 'Invalid refresh token' })
+        return
+    }
+    const access_token = await usersService.signAccessToken(user_id)
+    res.json({ access_token })
 }

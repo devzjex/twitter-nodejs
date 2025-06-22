@@ -1,54 +1,59 @@
 {
-  "name": "nodejs-typescript",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "dev": "npx nodemon",
-    "build": "rimraf ./dist && tsc && tsc-alias",
-    "start": "node dist/index.js",
-    "lint": "eslint --cache --ext js,mjs,cjs,ts src/",
-    "lint:fix": "eslint --fix --ext js,mjs,cjs,ts src/",
-    "typecheck": "tsc --emitDeclarationOnly false --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "husky install"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.23.0",
-    "@types/express": "^5.0.1",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/lodash": "^4.17.16",
-    "@types/node": "^22.13.14",
-    "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.5",
-    "globals": "^16.0.0",
-    "husky": "8",
-    "lint-staged": "^15.5.0",
-    "nodemon": "^3.1.9",
-    "prettier": "^3.5.3",
-    "rimraf": "^6.0.1",
-    "tsc-alias": "^1.8.13",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
-  },
-  "lint-staged": {
-    "src/**/*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write ."
-    ],
-    "src/**/*.{json,css,md}": [
-      "prettier --write ."
-    ]
-  },
-  "dependencies": {
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "express-validator": "^7.2.1",
-    "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.21",
-    "mongodb": "^6.15.0"
-  }
+    "name": "nodejs-typescript",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "npx nodemon --development",
+        "build": "rimraf ./dist && tsc && tsc-alias",
+        "start": "node dist/index.js --production",
+        "lint": "eslint --cache --ext js,mjs,cjs,ts src/",
+        "lint:fix": "eslint --fix --ext js,mjs,cjs,ts src/",
+        "typecheck": "tsc --emitDeclarationOnly false --noEmit",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.23.0",
+        "@types/express": "^5.0.1",
+        "@types/formidable": "^3.4.5",
+        "@types/jsonwebtoken": "^9.0.9",
+        "@types/lodash": "^4.17.16",
+        "@types/minimist": "^1.2.5",
+        "@types/node": "^22.13.14",
+        "eslint": "^9.23.0",
+        "eslint-config-prettier": "^10.1.1",
+        "eslint-plugin-prettier": "^5.2.5",
+        "globals": "^16.0.0",
+        "husky": "8",
+        "lint-staged": "^15.5.0",
+        "nodemon": "^3.1.9",
+        "prettier": "^3.5.3",
+        "rimraf": "^6.0.1",
+        "tsc-alias": "^1.8.13",
+        "tsx": "^4.19.3",
+        "typescript": "^5.8.2",
+        "typescript-eslint": "^8.28.0"
+    },
+    "lint-staged": {
+        "src/**/*.{js,ts}": [
+            "eslint --fix",
+            "prettier --write ."
+        ],
+        "src/**/*.{json,css,md}": [
+            "prettier --write ."
+        ]
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^5.1.0",
+        "express-validator": "^7.2.1",
+        "formidable": "^3.5.4",
+        "jsonwebtoken": "^9.0.2",
+        "lodash": "^4.17.21",
+        "minimist": "^1.2.8",
+        "mongodb": "^6.15.0",
+        "sharp": "^0.34.2"
+    }
 }
