@@ -21,7 +21,7 @@ app.use('/users', userRouter)
 app.use('/medias', mediasRouter)
 app.use('/static', staticRouter) // custom static route for serving images
 
-// app.use('/static', express.static(UPLOAD_DIR))   // static route for serving images in library minimist
+// app.use('/static', express.static(UPLOAD_IMAGE_DIR))   // static route for serving images in library minimist
 app.use(defaultErrorHandler)
 
 app.listen(PORT, () => {
